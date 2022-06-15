@@ -1,7 +1,6 @@
 package com.xz.ppjnet.service.impl;
 
-import com.xz.ppjnet.service.DocReadService;
-import lombok.extern.slf4j.Slf4j;
+import com.xz.ppjnet.service.DocService;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
@@ -19,9 +18,9 @@ import java.util.List;
  * @email czr2001@outlook.com
  * @date 2022/6/15 11:16
  */
-@Slf4j
 @Service
-public class DocReadServiceImpl implements DocReadService {
+public class DocServiceImpl implements DocService {
+
     @Override
     public List<String> readDoc(String filePath) {
         List<String> strings = new ArrayList<>();
@@ -49,12 +48,9 @@ public class DocReadServiceImpl implements DocReadService {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            log.error("---------文件异常----------");
 
         } catch (IOException e) {
             e.printStackTrace();
-            log.error("---------找不到文件----------");
-
         }
         return strings;
     }

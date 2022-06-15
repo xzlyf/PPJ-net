@@ -7,7 +7,7 @@ import java.util.List;
  * @email czr2001@outlook.com
  * @date 2022/6/15 11:15
  */
-public interface DocReadService {
+public interface DocService {
 
     /**
      * 读取一个doc/docx文件

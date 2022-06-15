@@ -1,8 +1,6 @@
 package com.xz.ppjnet.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author XiaoZe
@@ -12,14 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 public class Tiku {
     private int id;
-    private String quiz;
+    private String question;
     private String answer;
+
+    private int typeId;
 
     public Tiku() {
     }
 
-    public Tiku(String quiz, String answer) {
-        this.quiz = quiz;
+    public Tiku(String question, String answer, int typeId) {
+        this.question = question;
         this.answer = answer;
     }
 }

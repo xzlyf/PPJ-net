@@ -11,6 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TikuDao extends BaseMapper<Tiku> {
-    //todo  批量存入数据库
-    //todo mysql驱动连接不上
+
 }
