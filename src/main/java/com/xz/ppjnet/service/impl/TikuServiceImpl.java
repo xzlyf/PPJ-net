@@ -1,8 +1,8 @@
 package com.xz.ppjnet.service.impl;
 
-import com.xz.module.common.exception.BusinessException;
 import com.xz.ppjnet.dao.TikuDao;
 import com.xz.ppjnet.entity.Tiku;
+import com.xz.ppjnet.exception.BusinessException;
 import com.xz.ppjnet.service.DocService;
 import com.xz.ppjnet.service.TikuService;
 import com.xz.ppjnet.utils.ConvertUtil;

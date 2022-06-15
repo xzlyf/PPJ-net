@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   datasource:
     url: jdbc:mysql://139.9.67.142:3300/tiku?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
@@ -20,7 +22,11 @@ spring:
         refresh:
           adaptive: true
           period: 60
-
+  mvc:
+    static-path-pattern: /**
+  jackson:
+    default-property-inclusion: non_null  #返回数据时过滤null字段
+    date-format: yyyy-MM-dd HH:mm:ss
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*Mapper.xml

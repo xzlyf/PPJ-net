@@ -2,7 +2,7 @@ package com.xz.ppjnet.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.xz.module.common.exception.BusinessException;
+import com.xz.ppjnet.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
