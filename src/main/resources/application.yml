@@ -1,59 +1,11 @@
-#server:
-#  servlet:
-#    session:
-#      timeout: PT168H #session过期时间168小时就是7天
 spring:
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/helpful-net?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
-#    username: root
-#    password: xzlyf297
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    initialSize: 5
-#    minIdle: 5
-#    maxActive: 20
-#    maxWait: 60000
-#    timeBetweenEvictionRunsMillis: 60000
-#    minEvictableIdleTimeMillis: 300000
-#    validationQuery: SELECT 1 FROM DUAL
-#    testWhileIdle: true
-#    testOnBorrow: false
-#    testOnReturn: false
-#    poolPreparedStatements: true
-#    filters: stat,wall,log4j
-#    maxPoolPreparedStatementPerConnectionSize: 20
-#    useGlobalDataSourceStat: true
-#    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-  thymeleaf:
-    prefix: classpath:/templates/   #模板路径，页面文件一般放在templates
-    suffix: .html                   #模板后缀
-    servlet:
-      content-type: text/html       #设置Content-type
-    encoding: utf-8                 #编码方式
-    cache: false                    #关闭缓存,每次都会重新加载页面,开发过程可以立即看到页面修改的结果
-  mvc:
-    static-path-pattern: /**
-  jackson:
-    default-property-inclusion: non_null  #返回数据时过滤null字段
-    date-format: yyyy-MM-dd HH:mm:ss
-#  #Redis配置
-#  redis:
-#    host: localhost
-#    port: 6379
-#    timeout: 30000
-#    database: 0
-#    lettuce: #lettuce基于netty，线程安全，支持并发
-#      pool:
-#        max-active: 8
-#        max-wait: -1ms
-#        max-idle: 2
-#        min-idle: 0
-#      cluster:
-#        refresh:
-#          adaptive: true
-#          period: 60
-#
-#mybatis-plus:
-#  mapper-locations: classpath:mappers/*Mapper.xml
-#  configuration:
-#    map-underscore-to-camel-case: true  #开启驼峰命名和下划线自动转换
+  datasource:
+    url: jdbc:mysql://localhost:3306/tiku?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: xzlyf297
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true  #开启驼峰命名和下划线自动转换
