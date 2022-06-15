@@ -5,6 +5,8 @@ import com.xz.ppjnet.dao.TikuDao;
 import com.xz.ppjnet.entity.Tiku;
 import com.xz.ppjnet.service.DocService;
 import com.xz.ppjnet.service.TikuService;
+import com.xz.ppjnet.utils.ConvertUtil;
+import com.xz.ppjnet.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,8 @@ public class TikuServiceImpl implements TikuService {
     private TikuDao tikuDao;
     @Autowired
     private DocService docService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     @Transactional
@@ -97,7 +101,30 @@ public class TikuServiceImpl implements TikuService {
     }
 
     @Override
-    public Tiku getOne(int typeId) {
-        return null;
+    public Tiku getOne(int typeId, String user) {
+
+        Integer userId = (Integer) redisUtil.get(user);
+        if (userId == null) {
+            throw new BusinessException("用户不存在");
+        }
+        List<Tiku> tikus = ConvertUtil.castList(redisUtil.get(userId.toString()), Tiku.class);
+        //缓存没有任务
+        if (tikus == null) {
+            tikus = tikuDao.getRandom(typeId, userId);
+        }
+
+        //取出一个任务
+        Tiku tiku = null;
+        if (tikus.size() > 0) {
+            tiku = tikus.remove(0);
+            redisUtil.set(userId.toString(), tikus, 300);
+        }
+
+        //如果等于tasks等于0直接删除redis
+        if (tikus.size() == 0) {
+            redisUtil.del(userId.toString());
+        }
+        return tiku;
     }
+
 }

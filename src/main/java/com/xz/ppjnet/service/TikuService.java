@@ -9,9 +9,10 @@ import com.xz.ppjnet.entity.Tiku;
  */
 public interface TikuService {
     void readTemplateA(String filepath);
+
     void readTemplateB(String filepath);
 
     void addTi(Tiku tiku);
 
-    Tiku getOne(int typeId);
+    Tiku getOne(int typeId, String user);
 }

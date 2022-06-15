@@ -1,8 +1,8 @@
 package com.xz.ppjnet.controller;
 
 import com.xz.module.common.exception.BusinessException;
-import com.xz.ppjnet.service.DocService;
 import com.xz.ppjnet.service.TikuService;
+import com.xz.ppjnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,8 @@ public class TikuController {
 
     @Autowired
     private TikuService tikuService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/admin")
     public void adminSet(@RequestParam String pwd) {
@@ -34,13 +36,23 @@ public class TikuController {
     }
 
     /**
+     * 设置用户名
+     * @param user length<16
+     */
+    @GetMapping("/setUser")
+    public Object setUser(@RequestParam String user){
+        return userService.setUser(user.trim());
+    }
+
+    /**
      * 随机取出一道题
      *
      * @param type 题库类型
      */
     @GetMapping("/getOne")
-    public Object getOne(@RequestParam int type) {
-        return null;
+    public Object getOne(@RequestParam int type,
+                         @RequestParam String user) {
+        return tikuService.getOne(type,user);
     }
 
 }

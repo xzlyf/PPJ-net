@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xz.ppjnet.dao.TikuDao">
 
+    <select id="getRandom" resultType="com.xz.ppjnet.entity.Tiku">
+        select *
+        from tiku t
+        where t.id not in (
+            select tf.tiku_id
+            from tiku_filter as tf
+            where tf.user_id = #{userId}
+        )
+          and t.type_id = #{typeId}
+          and t.id >= (RAND() * (SELECT MAX(tt.id) FROM tiku tt)) limit 10
+    </select>
 </mapper>
