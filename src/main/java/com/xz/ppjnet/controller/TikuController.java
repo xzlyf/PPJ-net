@@ -55,4 +55,12 @@ public class TikuController {
         return tikuService.getOne(type,user);
     }
 
+    @GetMapping("/checkOne")
+    public Object checkOne(@RequestParam String answer,
+                           @RequestParam int tikuId,
+                           @RequestParam String user){
+        return tikuService.checkOne(tikuId, answer,user);
+    }
+
+
 }

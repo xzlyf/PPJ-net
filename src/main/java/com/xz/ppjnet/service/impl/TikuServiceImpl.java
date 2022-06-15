@@ -105,7 +105,7 @@ public class TikuServiceImpl implements TikuService {
 
         Integer userId = (Integer) redisUtil.get(user);
         if (userId == null) {
-            throw new BusinessException("用户不存在");
+            throw new BusinessException("用户登录");
         }
         List<Tiku> tikus = ConvertUtil.castList(redisUtil.get(userId.toString()), Tiku.class);
         //缓存没有任务
@@ -125,6 +125,19 @@ public class TikuServiceImpl implements TikuService {
             redisUtil.del(userId.toString());
         }
         return tiku;
+    }
+
+    @Override
+    public boolean checkOne(int tikuId, String answer, String user) {
+        Integer userId = (Integer) redisUtil.get(user);
+        if (userId == null) {
+            throw new BusinessException("用户未登录");
+        }
+        //写入过滤表
+        tikuDao.addFilter(tikuId, userId);
+        //获取正确答案
+        String remote = tikuDao.getAnswer(tikuId);
+        return remote.equalsIgnoreCase(answer);
     }
 
 }

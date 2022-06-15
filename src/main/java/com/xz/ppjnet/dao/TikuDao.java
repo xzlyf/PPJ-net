@@ -14,4 +14,8 @@ import java.util.List;
 @Repository
 public interface TikuDao extends BaseMapper<Tiku> {
     List<Tiku> getRandom(int typeId, int userId);
+
+    String getAnswer(int id);
+
+    void addFilter(int tikuId,int userId);
 }

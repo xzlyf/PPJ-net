@@ -15,4 +15,6 @@ public interface TikuService {
     void addTi(Tiku tiku);
 
     Tiku getOne(int typeId, String user);
+
+    boolean checkOne(int tikuId,String answer,String user);
 }
