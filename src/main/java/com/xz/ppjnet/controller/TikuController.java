@@ -37,7 +37,11 @@ public class TikuController {
 
     @GetMapping("/index")
     public String index() {
-        return "tiku-m";
+        return "index-m";
+    }
+    @GetMapping("/shuati")
+    public String shuati() {
+        return "shuati-m";
     }
 
     /**

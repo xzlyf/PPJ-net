@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>ACP刷题</title>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+        .nav{
+            height: 50px;
+            background-color: #FFC312;
+            box-shadow: 1px 4px 2px #af8d2f;
+        }
+
+        .logo{
+            font-size: larger;
+            font-weight: 800;
+            line-height: 50px;
+            margin-left: 10px;
+        }
+        .logo a{
+            color: white;
+            text-decoration: none;
+            -moz-text-decoration-line: overline;
+        }
+        #loginView {
+            text-align: left;
+            width: 250px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 5px 5px #dbdbdb;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #loginView label {
+            margin-top: 20px;
+        }
+
+        #loginView span {
+            font-size: small;
+            display: block;
+        }
+        #questionView {
+            background-color: white;
+            padding: 25px;
+            box-shadow: 5px 5px #eaeaea;
+
+        }
+
+        .white_content {
+            display: none;
+            position: absolute;
+            width: 70%;
+            height: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #bfc4c5;
+            border-radius: 8px;
+            background-color: #ffffff;
+            z-index: 1002;
+            overflow: auto;
+        }
+
+        .retryBtn {
+            position: absolute;
+            bottom: 0;
+            display: inline-block;
+            width: 100%;
+            background: #f5b614;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .funnyImg {
+            width: 200px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #answerList {
+            margin-top: 30px;
+        }
+
+        #answerList a {
+            text-decoration: none;
+        }
+
+        #answerList button {
+            display: block;
+            width: 100%;
+            height: 45px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <span class="logo"><a href="/">< PPTools</a></span>
+</div>
+
+<div id="loginView">
+    <div class="form-group">
+        <h3 style="text-align: center"><strong>pptools用户识别</strong></h3>
+        <label for="username">用户名</label>
+        <input type="email" class="form-control" id="username" placeholder="username">
+        <label for="passwd">密码</label>
+        <input type="password" class="form-control" id="passwd" placeholder="password">
+    </div>
+    <button type="button" class="btn btn-default" style="width: 100%;background-color: #FFC312;color: white" onclick="setUser()">立即进入</button>
+    <span style="margin-top: 20px;font-weight: bolder">Tips:</span>
+    <span>☑️通过账号记录用户学习进度</span>
+    <span>☑️未注册用户将自动注册</span>
+    <span>☑️提示"账户名或密码错误"表示当前用户名已经有人使用了</span>
+</div>
+<div id="questionView" style="display: none">
+    <h4 id="title"></h4>
+    <div id="answerList">
+        <p><b>单选题-选择你喜欢的那一个</b></p>
+        <button id="a1" type="button" className="btn btn-default" onclick="checkOne('A')">A</button>
+        <button id="a2" type="button" className="btn btn-default" onclick="checkOne('B')">B</button>
+        <button id="a3" type="button" className="btn btn-default" onclick="checkOne('C')">C</button>
+        <button id="a4" type="button" className="btn btn-default" onclick="checkOne('D')">D</button>
+        <input type="hidden" id="tikuId">
+    </div>
+</div>
+
+<div id="MyDiv" class="white_content" >
+    <div style="text-align: right; cursor: default; height: 15px;">
+        <span style="font-size: 26px;margin-right:3px" onclick="CloseDiv('MyDiv','fade')">×</span>
+    </div>
+    <div style="text-align: left; cursor: default; height: 18px;">
+        <span style="font-size: 16px;margin-left:18px;font-weight: bolder">你错了</span>
+    </div>
+    <img class="funnyImg" src="https://s1.ax1x.com/2022/06/15/XTxYKP.jpg" width="200px">
+    <div class="retryBtn" onclick="CloseDiv('MyDiv','fade')">我错了，我错了</div>
+</div>
+<script>
+    var musername = "";
+    $(function () {
+    })
+
+    function setUser() {
+        let username = $("#username").val()
+        let passwd = $("#passwd").val()
+        if (!username) {
+            alert("用户名或密码不可为空")
+            return
+        }
+        if (!passwd) {
+            alert("用户名或密码不可为空")
+            return
+        }
+        if (username.length < 4 || username.length >= 16) {
+            alert("用户名仅能4至16位")
+            return;
+        }
+        if (passwd.length < 4 || passwd.length >= 16) {
+            alert("密码仅能4至16位")
+            return;
+        }
+        let user = {
+            name: username,
+            passwd: passwd
+        }
+        $.ajax({
+            url: "/tiku/setUser",
+            contentType: "application/json;charset=UTF-8",
+            dataType:"json",
+            data: JSON.stringify(user),
+            method: 'POST',
+            success: function (res) {
+                if (res.code === 1) {
+                    musername = res.data.name
+                    $("#loginView").hide(200)
+                    $("#questionView").show(200)
+                    next()
+                } else {
+                    alert(res.msg)
+                }
+            },
+            error: function (ex) {
+                alert("当前与服务器通信失败，请稍后再试")
+            }
+        })
+    }
+
+    function next() {
+        $.ajax({
+            url: "/tiku/getOne",
+            data: {
+                user: musername,
+                type: 1
+            },
+            method: 'GET',
+            success: function (res) {
+                if (res.code === 1) {
+                    res.data.question = res.data.question.replace(/\n/g, "<br />")
+                    $("#title").html(res.data.question)
+                    $("#tikuId").val(res.data.id)
+                } else {
+                    alert(res.msg)
+                }
+            },
+            error: function (ex) {
+                alert("当前与服务器通信失败，请稍后再试")
+            }
+        })
+    }
+
+    function checkOne(answer) {
+        let tikuId = $("#tikuId").val();
+        $.ajax({
+            url: '/tiku/checkOne',
+            method: 'GET',
+            data: {
+                answer: answer,
+                tikuId: tikuId,
+                user: musername
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.code === 1) {
+                    if (res.data) {
+                        next()
+                    } else {
+                        spbf()
+                    }
+                } else {
+                    alert(res.msg)
+                }
+            },
+            error: function (ex) {
+                alert("当前与服务器通信失败，请稍后再试")
+            }
+        })
+    }
+
+    function CloseDiv(show_div, bg_div) {
+        next()
+        $("#MyDiv").hide();
+        $("#a1").removeAttr("disabled");
+        $("#a2").removeAttr("disabled");
+        $("#a3").removeAttr("disabled");
+        $("#a4").removeAttr("disabled");
+    }
+
+    function spbf() {
+        $("#MyDiv").show();
+        $("#a1").attr("disabled","disabled");
+        $("#a2").attr("disabled","disabled");
+        $("#a3").attr("disabled","disabled");
+        $("#a4").attr("disabled","disabled");
+    }
+</script>
+</body>
+</html>
