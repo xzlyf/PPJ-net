@@ -39,6 +39,7 @@ public class TikuController {
     public String index() {
         return "index-m";
     }
+
     @GetMapping("/shuati")
     public String shuati() {
         return "shuati-m";
@@ -84,7 +85,14 @@ public class TikuController {
 
     @GetMapping("/getWrong")
     @ResponseBody
-    public Object getWrong(@RequestParam String user){
+    public Object getWrong(@RequestParam String user) {
         return tikuService.getWrong(user);
+    }
+
+    @GetMapping("/deleteWrong/{user}/{tikuId}")
+    @ResponseBody
+    public Object deleteWrong(@PathVariable String user,
+                              @PathVariable int tikuId) {
+        return tikuService.removeWrong(user, tikuId);
     }
 }

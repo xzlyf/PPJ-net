@@ -21,4 +21,6 @@ public interface TikuService {
     boolean checkOne(int tikuId,String answer,String user);
 
     List<Tiku> getWrong(String user);
+
+    int removeWrong(String user,int tikuId);
 }

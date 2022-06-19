@@ -4,6 +4,12 @@
     <insert id="addFilter">
         insert into tiku_filter (user_id, tiku_id, tag) value (#{userId},#{tikuId},#{tag})
     </insert>
+    <update id="updateTag">
+        update tiku_filter tf
+        set tf.tag = 0
+        where tf.user_id = #{userId}
+          and tf.tiku_id = #{tikuId}
+    </update>
 
     <select id="getRandom" resultType="com.xz.ppjnet.entity.Tiku">
         select *

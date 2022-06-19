@@ -359,12 +359,29 @@
                         view += '<div>' +
                             '<span>' + res.data[i].question + '</span>' +
                             '<p><b>正确答案' + res.data[i].answer + '</b></p>' +
-                            '<button type="button" class="btn btn-default" style="width: 100%">移出错题集</button>' +
+                            '<button type="button" class="btn btn-default" style="width: 100%" onclick="remove('+res.data[i].id+',this)">移出错题集</button>' +
                             '</div>'
                     }
 
                     $("#total").text("错题数量" + res.data.length)
                     $("#wrongView").html(view)
+                } else {
+                    alert(res.msg)
+                }
+            },
+            error: function (ex) {
+                alert("当前与服务器通信失败，请稍后再试")
+            }
+        })
+    }
+
+    function remove(tikuId,obj) {
+        $.ajax({
+            url: '/tiku/deleteWrong/'+musername+'/'+tikuId,
+            method: 'GET',
+            success: function (res) {
+                if (res.code === 1) {
+                    $(obj).attr("disabled","disabled").text("已移出")
                 } else {
                     alert(res.msg)
                 }
