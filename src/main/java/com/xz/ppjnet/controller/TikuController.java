@@ -82,4 +82,9 @@ public class TikuController {
     }
 
 
+    @GetMapping("/getWrong")
+    @ResponseBody
+    public Object getWrong(@RequestParam String user){
+        return tikuService.getWrong(user);
+    }
 }

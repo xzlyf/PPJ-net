@@ -142,4 +142,13 @@ public class TikuServiceImpl implements TikuService {
         return b;
     }
 
+    @Override
+    public List<Tiku> getWrong(String user) {
+        Integer userId = (Integer) redisUtil.get(user);
+        if (userId == null) {
+            throw new BusinessException("用户未登录");
+        }
+        return tikuDao.getWrong(userId);
+    }
+
 }

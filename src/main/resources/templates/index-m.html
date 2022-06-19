@@ -13,23 +13,34 @@
             margin: 0;
             padding: 0;
         }
-        .nav{
+
+        .nav-bar {
             height: 50px;
             background-color: #FFC312;
             box-shadow: 1px 4px 2px #af8d2f;
         }
 
-        .logo{
+        .logo {
             font-size: larger;
             font-weight: 800;
             line-height: 50px;
             margin-left: 10px;
         }
-        .logo a{
+
+        .logo a {
             color: white;
             text-decoration: none;
             -moz-text-decoration-line: overline;
         }
+
+        .userinfo {
+            position: absolute;
+            right: 20px;
+            line-height: 50px;
+            font-weight: bold;
+            color: white;
+        }
+
         #loginView {
             text-align: left;
             width: 250px;
@@ -52,11 +63,43 @@
             font-size: small;
             display: block;
         }
+
+        #tools {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
         #questionView {
             background-color: white;
             padding: 25px;
             box-shadow: 5px 5px #eaeaea;
 
+        }
+
+        #testView {
+            background-color: white;
+            padding: 25px;
+            box-shadow: 5px 5px #eaeaea;
+        }
+
+        #wrongView {
+            background-color: white;
+            padding: 25px;
+            box-shadow: 5px 5px #eaeaea;
+        }
+
+        #wrongView span {
+            white-space: pre-line
+        }
+
+        #wrongView div {
+            margin-top: 20px;
+            background-color: white;
+            padding: 8px;
+            border: 2px solid black;
+            border-radius: 8px;
+            box-shadow: 4px 4px #424242;
         }
 
         .white_content {
@@ -72,6 +115,16 @@
             background-color: #ffffff;
             z-index: 1002;
             overflow: auto;
+        }
+
+        #bluView {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .retryBtn {
@@ -112,46 +165,66 @@
     </style>
 </head>
 <body>
-<div class="nav">
+<div class="nav-bar">
     <span class="logo"><a href="/">< PPTools</a></span>
+    <span id="user" class="userinfo"></span>
 </div>
 
 <div id="loginView">
     <div class="form-group">
-        <h3 style="text-align: center"><strong>pptools用户识别</strong></h3>
+        <h3 style="text-align: center"><strong>PPTools</strong></h3>
         <label for="username">用户名</label>
         <input type="email" class="form-control" id="username" placeholder="username">
         <label for="passwd">密码</label>
         <input type="password" class="form-control" id="passwd" placeholder="password">
     </div>
-    <button type="button" class="btn btn-default" style="width: 100%;background-color: #FFC312;color: white" onclick="setUser()">立即进入</button>
+    <button type="button" class="btn btn-default" style="width: 100%;background-color: #FFC312;color: white"
+            onclick="setUser()">立即进入
+    </button>
     <span style="margin-top: 20px;font-weight: bolder">Tips:</span>
     <span>☑️通过账号记录用户学习进度</span>
     <span>☑️未注册用户将自动注册</span>
     <span>☑️提示"账户名或密码错误"表示当前用户名已经有人使用了</span>
+
+</div>
+
+<div id="tools" style="display: none">
+    <ul class="nav nav-tabs">
+        <li id="l1" role="presentation" class="active"><a href="#" onclick="next()">继续刷题</a></li>
+        <li id="l2" role="presentation"><a href="#" onclick="testView()">模拟考试</a></li>
+        <li id="l3" role="presentation"><a href="#" onclick="getWrong()">错题集</a></li>
+    </ul>
 </div>
 <div id="questionView" style="display: none">
-    <h4 id="title"></h4>
+    <h4 id="title" style="white-space: pre-line"></h4>
     <div id="answerList">
         <p><b>单选题-选择你喜欢的那一个</b></p>
-        <button id="a1" type="button" className="btn btn-default" onclick="checkOne('A')">A</button>
-        <button id="a2" type="button" className="btn btn-default" onclick="checkOne('B')">B</button>
-        <button id="a3" type="button" className="btn btn-default" onclick="checkOne('C')">C</button>
-        <button id="a4" type="button" className="btn btn-default" onclick="checkOne('D')">D</button>
+        <button id="a1" type="button" class="btn btn-info" onclick="checkOne('A')">A</button>
+        <button id="a2" type="button" class="btn btn-info" onclick="checkOne('B')">B</button>
+        <button id="a3" type="button" class="btn btn-info" onclick="checkOne('C')">C</button>
+        <button id="a4" type="button" class="btn btn-info" onclick="checkOne('D')">D</button>
         <input type="hidden" id="tikuId">
     </div>
 </div>
+<div id="testView" style="display: none">
+    <h1>未加入...</h1>
+</div>
+<div id="wrongView" style="display: none">
+</div>
 
-<div id="MyDiv" class="white_content" >
+
+<div id="MyDiv" class="white_content">
     <div style="text-align: right; cursor: default; height: 15px;">
         <span style="font-size: 26px;margin-right:3px" onclick="CloseDiv('MyDiv','fade')">×</span>
     </div>
     <div style="text-align: left; cursor: default; height: 18px;">
-        <span style="font-size: 16px;margin-left:18px;font-weight: bolder">你错了</span>
+        <span style="font-size: 16px;margin-left:18px;font-weight: bolder">选错了</span>
     </div>
-    <img class="funnyImg" src="https://s1.ax1x.com/2022/06/15/XTxYKP.jpg" width="200px">
-    <div class="retryBtn" onclick="CloseDiv('MyDiv','fade')">我错了，我错了</div>
+    <img class="funnyImg" src="https://s1.ax1x.com/2022/06/19/XjgEqJ.png" width="200px">
+    <div class="retryBtn" onclick="CloseDiv('MyDiv','fade')">已加入错题集</div>
 </div>
+<div id="bluView"></div>
+
 <script>
     var musername = "";
     $(function () {
@@ -183,14 +256,16 @@
         $.ajax({
             url: "/tiku/setUser",
             contentType: "application/json;charset=UTF-8",
-            dataType:"json",
+            dataType: "json",
             data: JSON.stringify(user),
             method: 'POST',
             success: function (res) {
                 if (res.code === 1) {
                     musername = res.data.name
+                    $("#user").text('hello ' + musername)
                     $("#loginView").hide(200)
                     $("#questionView").show(200)
+                    $("#tools").show(100)
                     next()
                 } else {
                     alert(res.msg)
@@ -203,6 +278,12 @@
     }
 
     function next() {
+        $("#wrongView").hide(0)
+        $("#testView").hide(0)
+        $("#questionView").show(200)
+        $("#l1").addClass("active")
+        $("#l2").removeClass("active")
+        $("#l3").removeClass("active")
         $.ajax({
             url: "/tiku/getOne",
             data: {
@@ -212,7 +293,7 @@
             method: 'GET',
             success: function (res) {
                 if (res.code === 1) {
-                    res.data.question = res.data.question.replace(/\n/g, "<br />")
+                    // res.data.question = res.data.question.replace(/\n/g, "<br />")//换行符改为 <br />
                     $("#title").html(res.data.question)
                     $("#tikuId").val(res.data.id)
                 } else {
@@ -236,7 +317,6 @@
                 user: musername
             },
             success: function (res) {
-                console.log(res)
                 if (res.code === 1) {
                     if (res.data) {
                         next()
@@ -253,9 +333,52 @@
         })
     }
 
+    function testView() {
+        $("#questionView").hide(0)
+        $("#wrongView").hide(0)
+        $("#testView").show(200)
+    }
+
+    function getWrong() {
+        $("#questionView").hide(0)
+        $("#testView").hide(0)
+        $("#wrongView").show(200)
+        $("#l1").removeClass("active")
+        $("#l2").removeClass("active")
+        $("#l3").addClass("active")
+        $.ajax({
+            url: '/tiku/getWrong',
+            method: 'GET',
+            data: {
+                user: musername
+            },
+            success: function (res) {
+                if (res.code === 1) {
+                    let view = '<p>错题数量：' + res.data.length + '</p>';
+                    for (let i = 0; i < res.data.length; i++) {
+                        view += '<div>' +
+                            '<span>' + res.data[i].question + '</span>' +
+                            '<p><b>正确答案' + res.data[i].answer + '</b></p>' +
+                            '<button type="button" class="btn btn-default" style="width: 100%">移出错题集</button>' +
+                            '</div>'
+                    }
+
+                    $("#total").text("错题数量" + res.data.length)
+                    $("#wrongView").html(view)
+                } else {
+                    alert(res.msg)
+                }
+            },
+            error: function (ex) {
+                alert("当前与服务器通信失败，请稍后再试")
+            }
+        })
+    }
+
     function CloseDiv(show_div, bg_div) {
         next()
         $("#MyDiv").hide();
+        $("#bluView").hide();
         $("#a1").removeAttr("disabled");
         $("#a2").removeAttr("disabled");
         $("#a3").removeAttr("disabled");
@@ -263,11 +386,12 @@
     }
 
     function spbf() {
-        $("#MyDiv").show();
-        $("#a1").attr("disabled","disabled");
-        $("#a2").attr("disabled","disabled");
-        $("#a3").attr("disabled","disabled");
-        $("#a4").attr("disabled","disabled");
+        $("#bluView").show();
+        $("#MyDiv").show(200);
+        $("#a1").attr("disabled", "disabled");
+        $("#a2").attr("disabled", "disabled");
+        $("#a3").attr("disabled", "disabled");
+        $("#a4").attr("disabled", "disabled");
     }
 </script>
 </body>

@@ -12,14 +12,5 @@ public class Tiku {
     private int id;
     private String question;
     private String answer;
-
     private int typeId;
-
-    public Tiku() {
-    }
-
-    public Tiku(String question, String answer, int typeId) {
-        this.question = question;
-        this.answer = answer;
-    }
 }

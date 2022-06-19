@@ -2,6 +2,8 @@ package com.xz.ppjnet.service;
 
 import com.xz.ppjnet.entity.Tiku;
 
+import java.util.List;
+
 /**
  * @author XiaoZe
  * @email czr2001@outlook.com
@@ -17,4 +19,6 @@ public interface TikuService {
     Tiku getOne(int typeId, String user);
 
     boolean checkOne(int tikuId,String answer,String user);
+
+    List<Tiku> getWrong(String user);
 }
