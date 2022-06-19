@@ -15,15 +15,15 @@ class PpjNetApplicationTests {
 
     @Test
     void contextLoads() {
-        String regex = "^\\d*、";
-        String path = "C:\\Users\\CZR20\\Desktop\\ACP云计算-单选题.docx";
-        List<String> strings = docService.readDoc(path);
-        String[] split = strings.get(0).split("参考答案：");
-        for (int i = 0; i < split.length; i++) {
-            System.out.println("题目：\n" + split[i]);
-            System.out.println("答案：" + split[i + 1]);
-            i += 1;
-        }
+        //String regex = "^\\d*、";
+        //String path = "C:\\Users\\CZR20\\Desktop\\ACP云计算-单选题.docx";
+        //List<String> strings = docService.readDoc(path);
+        //String[] split = strings.get(0).split("参考答案：");
+        //for (int i = 0; i < split.length; i++) {
+        //    System.out.println("题目：\n" + split[i]);
+        //    System.out.println("答案：" + split[i + 1]);
+        //    i += 1;
+        //}
     }
 
 }

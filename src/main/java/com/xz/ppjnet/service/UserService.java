@@ -8,5 +8,5 @@ import com.xz.ppjnet.entity.User;
  * @date 2022/6/15 19:18
  */
 public interface UserService {
-    User setUser(String name);
+    User setUser(User user);
 }

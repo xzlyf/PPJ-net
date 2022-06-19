@@ -1,5 +1,6 @@
 package com.xz.ppjnet.controller;
 
+import com.xz.ppjnet.entity.User;
 import com.xz.ppjnet.exception.BusinessException;
 import com.xz.ppjnet.service.TikuService;
 import com.xz.ppjnet.service.UserService;
@@ -35,18 +36,25 @@ public class TikuController {
     }
 
     @GetMapping("/index")
-    public String index(){
+    public String index() {
         return "tiku-m";
     }
 
     /**
      * 设置用户名
+     *
      * @param user length<16
      */
-    @GetMapping("/setUser")
+    @PostMapping("/setUser")
     @ResponseBody
-    public Object setUser(@RequestParam String user){
-        return userService.setUser(user.trim());
+    public Object setUser(@RequestBody User user) {
+        if (user.getName() == null || user.getPasswd() == null) {
+            throw new BusinessException("参数错误");
+        }
+        if (user.getName().length() < 4 || user.getPasswd().length() < 4) {
+            throw new BusinessException("参数不符合规范");
+        }
+        return userService.setUser(user);
     }
 
     /**
@@ -58,15 +66,15 @@ public class TikuController {
     @ResponseBody
     public Object getOne(@RequestParam int type,
                          @RequestParam String user) {
-        return tikuService.getOne(type,user);
+        return tikuService.getOne(type, user);
     }
 
     @GetMapping("/checkOne")
     @ResponseBody
     public Object checkOne(@RequestParam String answer,
                            @RequestParam int tikuId,
-                           @RequestParam String user){
-        return tikuService.checkOne(tikuId, answer,user);
+                           @RequestParam String user) {
+        return tikuService.checkOne(tikuId, answer, user);
     }
 
 

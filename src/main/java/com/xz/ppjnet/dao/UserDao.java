@@ -1,5 +1,6 @@
 package com.xz.ppjnet.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xz.ppjnet.entity.User;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
  * @date 2022/6/15 19:19
  */
 @Repository
-public interface UserDao {
-    void serUser(User user);
+public interface UserDao extends BaseMapper<User> {
+    void insertUser(User user);
 
-    int  getUserId(String user);
+    User findUser(User user);
 }

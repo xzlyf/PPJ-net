@@ -15,7 +15,7 @@
         }
 
         #loginView {
-            text-align: center;
+            text-align: left;
             width: 250px;
             margin: 0 auto;
             padding: 20px;
@@ -28,6 +28,14 @@
             transform: translate(-50%, -50%);
         }
 
+        #loginView label {
+            margin-top: 20px;
+        }
+
+        #loginView span {
+            font-size: small;
+            display: block;
+        }
         #questionView {
             background-color: white;
             padding: 25px;
@@ -70,13 +78,16 @@
             top: 50%;
             transform: translate(-50%, -50%);
         }
-        #answerList{
+
+        #answerList {
             margin-top: 30px;
         }
-        #answerList a{
+
+        #answerList a {
             text-decoration: none;
         }
-        #answerList button{
+
+        #answerList button {
             display: block;
             width: 100%;
             height: 45px;
@@ -88,10 +99,17 @@
 
 <div id="loginView">
     <div class="form-group">
-        <label for="userset">用户名，记录你的刷题记录</label>
-        <input type="email" class="form-control" id="userset" placeholder="username">
+        <h3 style="text-align: center"><strong>pptools用户识别</strong></h3>
+        <label for="username">用户名</label>
+        <input type="email" class="form-control" id="username" placeholder="用户名">
+        <label for="passwd">密码</label>
+        <input type="password" class="form-control" id="passwd" placeholder="密码">
     </div>
-    <button type="button" class="btn btn-primary" onclick="setUser()">确定</button>
+    <button type="button" class="btn btn-primary" style="width: 100%" onclick="setUser()">立即进入</button>
+    <span style="margin-top: 20px;font-weight: bolder">Tips:</span>
+    <span>☑️通过账号记录用户学习进度</span>
+    <span>☑️未注册用户将自动注册</span>
+    <span>☑️提示"账户名或密码错误"表示当前用户名已经有人使用了</span>
 </div>
 <div id="questionView" style="display: none">
     <h4 id="title"></h4>
@@ -121,21 +139,34 @@
     })
 
     function setUser() {
-        let username = $("#userset").val()
+        let username = $("#username").val()
+        let passwd = $("#passwd").val()
         if (!username) {
-            alert("用户名不可为空")
+            alert("用户名或密码不可为空")
+            return
+        }
+        if (!passwd) {
+            alert("用户名或密码不可为空")
             return
         }
         if (username.length < 4 || username.length >= 16) {
             alert("用户名仅能4至16位")
             return;
         }
+        if (passwd.length < 4 || passwd.length >= 16) {
+            alert("密码仅能4至16位")
+            return;
+        }
+        let user = {
+            name: username,
+            passwd: passwd
+        }
         $.ajax({
             url: "/tiku/setUser",
-            data: {
-                user: username
-            },
-            method: 'GET',
+            contentType: "application/json;charset=UTF-8",
+            dataType:"json",
+            data: JSON.stringify(user),
+            method: 'POST',
             success: function (res) {
                 if (res.code === 1) {
                     musername = res.data.name

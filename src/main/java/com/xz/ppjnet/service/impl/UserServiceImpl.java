@@ -2,6 +2,7 @@ package com.xz.ppjnet.service.impl;
 
 import com.xz.ppjnet.dao.UserDao;
 import com.xz.ppjnet.entity.User;
+import com.xz.ppjnet.exception.BusinessException;
 import com.xz.ppjnet.service.UserService;
 import com.xz.ppjnet.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,19 @@ public class UserServiceImpl implements UserService {
     private RedisUtil redisUtil;
 
     @Override
-    public User setUser(String name) {
-        User u = new User(0, name);
+    public User setUser(User u) {
         try {
-            userDao.serUser(u);
+            userDao.insertUser(u);
         } catch (Exception e) {
-            //已存在，查询id
-            int id = userDao.getUserId(name);
-            u.setId(id);
+            //已存在，判断密码
+            User remote = userDao.findUser(u);
+            if (remote == null) {
+                throw new BusinessException("用户名或密码错误");
+            }
+            u.setId(remote.getId());
         }
         //存入redis
-        redisUtil.set(name, u.getId(),3600);
+        redisUtil.set(u.getName(), u.getId(), 3600);
         return u;
     }
 }
