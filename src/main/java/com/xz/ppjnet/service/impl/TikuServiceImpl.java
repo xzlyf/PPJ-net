@@ -133,11 +133,13 @@ public class TikuServiceImpl implements TikuService {
         if (userId == null) {
             throw new BusinessException("用户未登录");
         }
-        //写入过滤表
-        tikuDao.addFilter(tikuId, userId);
+
         //获取正确答案
         String remote = tikuDao.getAnswer(tikuId);
-        return remote.equalsIgnoreCase(answer);
+        boolean b = remote.equalsIgnoreCase(answer);
+        //写入过滤表
+        tikuDao.addFilter(tikuId, userId, b ? 0 : 1);
+        return b;
     }
 
 }

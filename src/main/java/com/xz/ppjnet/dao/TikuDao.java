@@ -17,5 +17,5 @@ public interface TikuDao extends BaseMapper<Tiku> {
 
     String getAnswer(int id);
 
-    void addFilter(int tikuId,int userId);
+    void addFilter(int tikuId,int userId,int tag);
 }

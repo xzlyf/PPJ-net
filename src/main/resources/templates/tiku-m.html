@@ -123,7 +123,7 @@
     </div>
 </div>
 
-<div id="MyDiv" class="white_content">
+<div id="MyDiv" class="white_content" >
     <div style="text-align: right; cursor: default; height: 15px;">
         <span style="font-size: 26px;margin-right:3px" onclick="CloseDiv('MyDiv','fade')">×</span>
     </div>
@@ -235,11 +235,20 @@
     }
 
     function CloseDiv(show_div, bg_div) {
+        next()
         $("#MyDiv").hide();
+        $("#a1").removeAttr("disabled");
+        $("#a2").removeAttr("disabled");
+        $("#a3").removeAttr("disabled");
+        $("#a4").removeAttr("disabled");
     }
 
     function spbf() {
         $("#MyDiv").show();
+        $("#a1").attr("disabled","disabled");
+        $("#a2").attr("disabled","disabled");
+        $("#a3").attr("disabled","disabled");
+        $("#a4").attr("disabled","disabled");
     }
 </script>
 </body>
